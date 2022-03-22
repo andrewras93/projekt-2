@@ -13,7 +13,7 @@
           <a class="nav-link" href="../views/fortidsminder.php">Fortidsminder</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Underside 2</a>
+          <a class="nav-link" href="../views/testside.php">Testside</a>
         </li>
       </ul>
     </div>
