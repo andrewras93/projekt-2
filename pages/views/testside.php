@@ -8,8 +8,6 @@
     require ('../../models/cURL.php');
     require ('../../models/class_api.php');
 
-
-
     // $page = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
     // $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=" . $selectedUndertype);
     

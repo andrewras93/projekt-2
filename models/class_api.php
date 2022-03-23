@@ -1,8 +1,13 @@
 <?php 
 
     class api{
+
+        public static function loadData(){
+            return curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
+
+        }
+        
         public static function getKommuner($page){
-            
             
             $kommuneArray = [];
     
@@ -23,10 +28,7 @@
             return $kommuner;
         }
 
-        public static function loadData(){
-            return curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
-
-        }
+        
 
 
         public static function getKommuneUndertyper($page, $kommune){
