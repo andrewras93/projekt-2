@@ -77,7 +77,7 @@
         <div class="row align-items-center">
             <div class="col">
                 <h1>Titel til test side</h1> 
-                <form action="/pages/views/testside.php" method="POST">
+                <form action="" method="POST">
                     <select name="selectedKommune">
                     <?php foreach ($kommuner as $kommune){ ?>
                         <option value="<?= $kommune ?>"> <?= $kommune ?></option>
