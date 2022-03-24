@@ -9,7 +9,7 @@
 
 
     $page = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
-    $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=" . $selectedUndertype);
+    $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=");
     
     // $kommuner = findKommune($page);
     ######## Find all names of regions with Fortidsminder ############
@@ -51,24 +51,19 @@
     // pre($kommuner);
 
     ###################################################################
+
+    ####################
+    
+    
+    #################### 
     
     $selectedKommune = $_POST["selectedKommune"] ? $_POST["selectedKommune"] : '';
     $selectedUndertype = $_POST["selectedUndertype"] ? $_POST["selectedUndertype"] : '';
-    
-    pre($selectedKommune);
-    pre($selectedUndertype);
+    $selectedMatch = $_POST["primærtnavn"] ? $_POST["primærtnavn"] : '';
 
-
-
-    ######## Match selected kommune with fortidsminder ############
-    
-    // Find all fortidsminder that matches with selected value
-    for ($i = 0; $i < count($page); $i++) {
-        // if match, echo matches
-        if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {   
-            echo $page[$i]["primærtnavn"] . '<br>';
-        }
-    }
+    //pre($selectedMatch);
+    //pre($selectedKommune);
+    //pre($selectedUndertype);
     
     ##################################################################
 ?>
@@ -80,7 +75,7 @@
                     <form action="" method="POST">
                         <h5>Vælg region</h5>
                         <select name="selectedKommune" class="mb-3 p-1 w-75">
-                            <option selected>Region navn</option>
+                            <option selected><?= $selectedKommune ? $selectedKommune : 'Region navn' ?></option>
                             <!-- foreach funktion -->
                             <?php foreach ($kommuner as $kommune){ ?>
                                 <option value="<?= $kommune ?>"> <?= $kommune ?></option>
@@ -88,7 +83,7 @@
                         </select>
                         <h5>Vælg undertype</h5>
                         <select name="selectedUndertype" class="mb-3 p-1 w-75">
-                            <option selected>Undertype</option>
+                            <option selected><?= $selectedUndertype ? $selectedUndertype : 'Region navn' ?></option>
                             <!-- foreach funktion -->
                             <?php foreach ($undertyper as $undertype){ ?>
                                 <option value="<?= $undertype ?>"> <?= $undertype ?></option>
@@ -114,28 +109,34 @@
             <div class="col-4">
                 <h5>Liste over matches</h5>
                 <div class="border">
-                    <ul>
+                    <form action="" method="POST">
                         <?php
                             for ($i = 0; $i < count($page); $i++) {
-                        ?>
-                        
-                            <?php
                                 // if match, echo matches
-                                if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {   
-                                     echo '<li>' . $page[$i]["primærtnavn"] . '</li>' . '<br>';
+                                if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {
+                                    echo '<input value="' . $page[$i]["primærtnavn"] . '"class="m-2" type="radio" name="primærtnavn">' . '<label for="idTest">' . $page[$i]["primærtnavn"] . '</input>' . '</label>' . '<br>';                                
                                 }
-                            ?>
-                        
-                        <?php } ?>
-                    </ul>
+                            }
+                        ?>
+                        <input type="submit">
+                    </form>
                 </div>
             </div>
             <div class="col-4">
                 <h5>Specifikke detajler</h5>
                 <div class="border">
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, voluptas sint rem sequi itaque harum saepe distinctio nesciunt ullam mollitia qui voluptates neque atque eius eaque ratione a temporibus commodi!</li>
-                    </ul>
+                    <?php
+                        if (!empty($selectedMatch)) {
+                            for ($i = 0; $i < count($page); $i++) {
+                                // if match, echo matches
+                                if ($page[$i]["primærtnavn"] == $selectedMatch) {
+                                    echo '<b>' . $page[$i]["primærtnavn"] . ':' . '</b>' . '<br>';
+                                    echo $page[$i]["visueltcenter"][0] . '<br>';
+                                    echo $page[$i]["visueltcenter"][1] . '<br>';
+                                }
+                            }
+                        }
+                    ?>
                 </div>
             </div>
         </div>
