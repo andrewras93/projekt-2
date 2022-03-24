@@ -9,7 +9,7 @@
 
 
     $page = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
-    $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=");
+    
 
     ?>
     <script>
@@ -100,16 +100,13 @@
                             <?php } ?>
                         </select>
                         <h5>Angiv radius</h5>
-                        <select class="mb-3 p-1 w-75">
-                            <option selected>Indtast værdi</option>
-                            <!-- foreach funktion -->
-                            <option value="3">Three</option>
-                        </select>
+                        <input class="mb-3 p-1 w-75" placeholder="Radius i meter"></input>
                         <h5>Vælg forplejningsmuligheder</h5>
                         <select class="mb-3 me-3 p-1 w-75">
-                            <option selected>Vælg forplejning i omregn</option>
-                            <!-- foreach funktion -->
-                            <option value="3">Three</option>
+                            <option selected>Vælg forplejning</option>
+                            <option value="Restaurant">Restaurant</option>
+                            <option value="Cafe">Cafe</option>
+                            <option value="Tankstation">Tankstation</option>
                         </select>
                         <input type="submit" value="Submit">
                     </form>
@@ -126,7 +123,9 @@
                                 if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {
                                     echo '<input value="' . $page[$i]["primærtnavn"] . '"class="m-2" type="radio" name="primærtnavn">' . '<label for="idTest">' . $page[$i]["primærtnavn"] . '</input>' . '</label>' . '<br>';                                
                                 }
+                                
                             }
+                            
                         ?>
                         <input type="submit">
                     </form>
