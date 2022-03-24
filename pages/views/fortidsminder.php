@@ -9,7 +9,7 @@
 
 
     $page = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
-    $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=" . $selectedUndertype);
+    $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=");
     
     // $kommuner = findKommune($page);
     ######## Find all names of regions with Fortidsminder ############
@@ -61,18 +61,9 @@
     $selectedUndertype = $_POST["selectedUndertype"] ? $_POST["selectedUndertype"] : '';
     $selectedMatch = $_POST["primærtnavn"] ? $_POST["primærtnavn"] : '';
 
-    pre($selectedMatch);
-
-    if (!empty($selectedMatch)) {
-        for ($i = 0; $i < count($page); $i++) {
-            // if match, echo matches
-            if ($page[$i]["primærtnavn"] == $selectedMatch) {
-                
-                echo $page[$i]["visueltcenter"][0] . '<br>';
-                echo $page[$i]["visueltcenter"][1] . '<br>';
-            }
-        }
-    }
+    //pre($selectedMatch);
+    //pre($selectedKommune);
+    //pre($selectedUndertype);
     
     //pre($selectedKommune);
     //pre($selectedUndertype);
@@ -137,9 +128,18 @@
             <div class="col-4">
                 <h5>Specifikke detajler</h5>
                 <div class="border">
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, voluptas sint rem sequi itaque harum saepe distinctio nesciunt ullam mollitia qui voluptates neque atque eius eaque ratione a temporibus commodi!</li>
-                    </ul>
+                    <?php
+                        if (!empty($selectedMatch)) {
+                            for ($i = 0; $i < count($page); $i++) {
+                                // if match, echo matches
+                                if ($page[$i]["primærtnavn"] == $selectedMatch) {
+                                    echo '<b>' . $page[$i]["primærtnavn"] . ':' . '</b>' . '<br>';
+                                    echo $page[$i]["visueltcenter"][0] . '<br>';
+                                    echo $page[$i]["visueltcenter"][1] . '<br>';
+                                }
+                            }
+                        }
+                    ?>
                 </div>
             </div>
         </div>
