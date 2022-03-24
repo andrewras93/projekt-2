@@ -55,20 +55,8 @@
     $selectedKommune = $_POST["selectedKommune"] ? $_POST["selectedKommune"] : '';
     $selectedUndertype = $_POST["selectedUndertype"] ? $_POST["selectedUndertype"] : '';
     
-    pre($selectedKommune);
-    pre($selectedUndertype);
-
-
-
-    ######## Match selected kommune with fortidsminder ############
-    
-    // Find all fortidsminder that matches with selected value
-    for ($i = 0; $i < count($page); $i++) {
-        // if match, echo matches
-        if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {   
-            echo $page[$i]["primærtnavn"] . '<br>';
-        }
-    }
+    //pre($selectedKommune);
+    //pre($selectedUndertype);
     
     ##################################################################
 ?>
@@ -114,20 +102,14 @@
             <div class="col-4">
                 <h5>Liste over matches</h5>
                 <div class="border">
-                    <ul>
-                        <?php
-                            for ($i = 0; $i < count($page); $i++) {
-                        ?>
-                        
-                            <?php
-                                // if match, echo matches
-                                if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {   
-                                     echo '<li>' . $page[$i]["primærtnavn"] . '</li>' . '<br>';
-                                }
-                            ?>
-                        
-                        <?php } ?>
-                    </ul>
+                    <?php
+                        for ($i = 0; $i < count($page); $i++) {
+                            // if match, echo matches
+                            if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {   
+                                echo '<input id="idTest" class="m-2" type="radio" name="fav_language">' . '<label for="idTest">' . $page[$i]["primærtnavn"] . '</input>' . '</label>' . '<br>';
+                            }
+                        }
+                    ?>
                 </div>
             </div>
             <div class="col-4">
