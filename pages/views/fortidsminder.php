@@ -2,15 +2,12 @@
     $pageTitle = "Fortidsminder";
     include ('../partials/head.php');
     include ('../partials/nav.php');
-
     include ('prettydump.php');
-    // include ('../../controllers/kommuneController.php');
+    
     require ('../../models/cURL.php');
-
 
     $page = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
     
-
     ?>
     <script>
         let lng = 9.5018;
@@ -58,11 +55,6 @@
     // pre($kommuner);
 
     ###################################################################
-
-    ####################
-    
-    
-    #################### 
     
     $selectedKommune = isset($_POST["selectedKommune"]) ? $_POST["selectedKommune"] : '';
     $selectedUndertype = isset($_POST["selectedUndertype"]) ? $_POST["selectedUndertype"] : '';
@@ -123,9 +115,7 @@
                                 if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {
                                     echo '<input value="' . $page[$i]["primærtnavn"] . '"class="m-2" type="radio" name="primærtnavn">' . '<label for="idTest">' . $page[$i]["primærtnavn"] . '</input>' . '</label>' . '<br>';                                
                                 }
-                                
                             }
-                            
                         ?>
                         <input type="submit">
                     </form>
