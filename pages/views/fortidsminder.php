@@ -87,7 +87,7 @@
                     <form action="" method="POST">
                         <h5>Vælg region</h5>
                         <select name="selectedKommune" class="mb-3 p-1 w-75">
-                            <option selected>Region navn</option>
+                            <option selected><?= $selectedKommune ? $selectedKommune : 'Region navn' ?></option>
                             <!-- foreach funktion -->
                             <?php foreach ($kommuner as $kommune){ ?>
                                 <option value="<?= $kommune ?>"> <?= $kommune ?></option>
@@ -95,7 +95,7 @@
                         </select>
                         <h5>Vælg undertype</h5>
                         <select name="selectedUndertype" class="mb-3 p-1 w-75">
-                            <option selected>Undertype</option>
+                            <option selected><?= $selectedUndertype ? $selectedUndertype : 'Region navn' ?></option>
                             <!-- foreach funktion -->
                             <?php foreach ($undertyper as $undertype){ ?>
                                 <option value="<?= $undertype ?>"> <?= $undertype ?></option>
