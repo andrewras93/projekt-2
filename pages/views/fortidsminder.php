@@ -57,9 +57,9 @@
     
     #################### 
     
-    $selectedKommune = $_POST["selectedKommune"] ? $_POST["selectedKommune"] : '';
-    $selectedUndertype = $_POST["selectedUndertype"] ? $_POST["selectedUndertype"] : '';
-    $selectedMatch = $_POST["primærtnavn"] ? $_POST["primærtnavn"] : '';
+    $selectedKommune = isset($_POST["selectedKommune"]) ? $_POST["selectedKommune"] : '';
+    $selectedUndertype = isset($_POST["selectedUndertype"]) ? $_POST["selectedUndertype"] : '';
+    $selectedMatch = isset($_POST["primærtnavn"]) ? $_POST["primærtnavn"] : '';
 
     //pre($selectedMatch);
     //pre($selectedKommune);
@@ -134,12 +134,38 @@
                                 // if match, echo matches
                                 if ($page[$i]["primærtnavn"] == $selectedMatch) {
                                     echo '<b>' . $page[$i]["primærtnavn"] . ':' . '</b>' . '<br>';
-                                    echo $page[$i]["visueltcenter"][0] . '<br>';
-                                    echo $page[$i]["visueltcenter"][1] . '<br>';
+                                    echo '<p id="lng" >' . $page[$i]["visueltcenter"][0] . '</p><br>';
+                                    echo '<p id="lat" >' . $page[$i]["visueltcenter"][1] . '</p><br>';
                                 }
                             }
                         }
                     ?>
+                    <div id="map"></div>
+
+                    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+                    <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&channel=2"
+                    async
+                    ></script>
+                    <script>
+                        let lng = document.getElementById("lng");
+                        let lat = document.getElementById("lat");
+                        // Initialize and add the map
+                        function initMap() {
+                        // The location of Uluru
+                        const uluru = { lat: 55.55039929, lng: 8.17221991 };
+                        // The map, centered at Uluru
+                        const map = new google.maps.Map(document.getElementById("map"), {
+                            zoom: 15,
+                            center: uluru,
+                        });
+                        // The marker, positioned at Uluru
+                        const marker = new google.maps.Marker({
+                            position: uluru,
+                            map: map,
+                        });
+                        }
+                    </script>
                 </div>
             </div>
         </div>
