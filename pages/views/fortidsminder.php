@@ -51,9 +51,28 @@
     // pre($kommuner);
 
     ###################################################################
+
+    ####################
+    
+    
+    #################### 
     
     $selectedKommune = $_POST["selectedKommune"] ? $_POST["selectedKommune"] : '';
     $selectedUndertype = $_POST["selectedUndertype"] ? $_POST["selectedUndertype"] : '';
+    $selectedMatch = $_POST["primærtnavn"] ? $_POST["primærtnavn"] : '';
+
+    pre($selectedMatch);
+
+    if (!empty($selectedMatch)) {
+        for ($i = 0; $i < count($page); $i++) {
+            // if match, echo matches
+            if ($page[$i]["primærtnavn"] == $selectedMatch) {
+                
+                echo $page[$i]["visueltcenter"][0] . '<br>';
+                echo $page[$i]["visueltcenter"][1] . '<br>';
+            }
+        }
+    }
     
     //pre($selectedKommune);
     //pre($selectedUndertype);
@@ -102,14 +121,17 @@
             <div class="col-4">
                 <h5>Liste over matches</h5>
                 <div class="border">
-                    <?php
-                        for ($i = 0; $i < count($page); $i++) {
-                            // if match, echo matches
-                            if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {   
-                                echo '<input id="idTest" class="m-2" type="radio" name="fav_language">' . '<label for="idTest">' . $page[$i]["primærtnavn"] . '</input>' . '</label>' . '<br>';
+                    <form action="" method="POST">
+                        <?php
+                            for ($i = 0; $i < count($page); $i++) {
+                                // if match, echo matches
+                                if ($page[$i]["kommuner"][0]["navn"] == $selectedKommune && $page[$i]["undertype"] == $selectedUndertype) {
+                                    echo '<input value="' . $page[$i]["primærtnavn"] . '"class="m-2" type="radio" name="primærtnavn">' . '<label for="idTest">' . $page[$i]["primærtnavn"] . '</input>' . '</label>' . '<br>';                                
+                                }
                             }
-                        }
-                    ?>
+                        ?>
+                        <input type="submit">
+                    </form>
                 </div>
             </div>
             <div class="col-4">
