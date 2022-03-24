@@ -10,6 +10,13 @@
 
     $page = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde");
     $undertyper = curlInit("https://api.dataforsyningen.dk/steder?hovedtype=Fortidsminde&undertype=");
+
+    ?>
+    <script>
+        let lng = 9.5018;
+        let lat = 56.2639;
+    </script>
+    <?php 
     
     // $kommuner = findKommune($page);
     ######## Find all names of regions with Fortidsminder ############
@@ -71,7 +78,7 @@
     ##################################################################
 ?>
     <h3 class="text-center">Her finder du fortidsminder i landets regioner</h3>
-    <div class="container d-flex my-5">
+    <div class="container-fluid my-5">
         <div class="row justify-content-center">
             <div class="col-3">
                 <div class="dropdown">
@@ -109,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="col-4">
+            <div class="col-3">
                 <h5>Liste over matches</h5>
                 <div class="border">
                     <form action="" method="POST">
@@ -125,7 +132,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-6">
                 <h5>Specifikke detajler</h5>
                 <div class="border">
                     <?php
@@ -134,34 +141,48 @@
                                 // if match, echo matches
                                 if ($page[$i]["primærtnavn"] == $selectedMatch) {
                                     echo '<b>' . $page[$i]["primærtnavn"] . ':' . '</b>' . '<br>';
-                                    echo '<p id="lng" >' . $page[$i]["visueltcenter"][0] . '</p><br>';
-                                    echo '<p id="lat" >' . $page[$i]["visueltcenter"][1] . '</p><br>';
+                                    echo '<p id="lng" class="mb-0">' . $page[$i]["visueltcenter"][0] . '</p>';
+                                    echo '<p id="lat" class="mb-0">' . $page[$i]["visueltcenter"][1] . '</p>';
                                 }
                             }
+                        } else {
+                            '<p id="lng" style="display: none">' . 9.5018 . '</p>';
+                            '<p id="lat" style="display: none">' . 56.2639 . '</p>';
+
                         }
                     ?>
                     <div id="map"></div>
 
                     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
                     <script
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&channel=2"
-                    async
-                    ></script>
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPvo3EAiQ21sCVzDqhIcnOjvKjAF8-VU8&callback=initMap&v=weekly&channel=2" async>
+                    </script>
+                    
                     <script>
-                        let lng = document.getElementById("lng");
-                        let lat = document.getElementById("lat");
+                        if (lng === null && lat === null){
+                            console.log('this is null');
+                        }
+                        lng = parseFloat(document.getElementById("lng").innerHTML) ? parseFloat(document.getElementById("lng").innerHTML) : lng;
+                        lat = parseFloat(document.getElementById("lat").innerHTML) ? parseFloat(document.getElementById("lat").innerHTML) : lat;
+                        
+                        console.log(lng);
+                        console.log(lat);
+
                         // Initialize and add the map
                         function initMap() {
-                        // The location of Uluru
-                        const uluru = { lat: 55.55039929, lng: 8.17221991 };
-                        // The map, centered at Uluru
+                        // The location of coordinates
+                        const coordinates = { 
+                            lat: lat,
+                            lng: lng 
+                        };
+                        // The map, centered at coordinates
                         const map = new google.maps.Map(document.getElementById("map"), {
-                            zoom: 15,
-                            center: uluru,
+                            zoom: 6,
+                            center: coordinates,
                         });
-                        // The marker, positioned at Uluru
+                        // The marker, positioned at coordinates
                         const marker = new google.maps.Marker({
-                            position: uluru,
+                            position: coordinates,
                             map: map,
                         });
                         }
